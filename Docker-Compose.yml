@@ -1,0 +1,25 @@
+services:
+  postgreSQL:
+    image: postgres:15.3
+    container_name: postgre_db_container
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=ADMIN
+      - POSTGRES_DB=screen_match
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    container_name: pg_admin_container
+    depends_on:
+      - postgreSQL
+    ports:
+      - "8080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=trujidev@postgresql.com
+      - PGADMIN_DEFAULT_PASSWORD=ADMIN
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
